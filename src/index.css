@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #EAEAEA;
+}
+
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  padding: 3px;
+  /* border-top: solid black 1px; */
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: lightgrey;
+}
+
+.person-container {
+  padding: 5px 5px 0px 5px;
+}
+
+.members-container > div:nth-child(odd) {
+  background-color: lightgrey;
+}
+
+.department-container {
+  margin: auto;
+  margin-top: 10px; 
+}
+
+.department-container.small {
+  width: 420px;
+}
+
+.department-container.large {
+  width: 700px;
+}
+
+.department-content {
+  border: 1px solid black;
+}
+
+.department-header {
+  background-color: #3797DE;
+  padding: 5px;
+}
+
+.department-header-title > span {
+  font-weight: bold;
+}
+
+.department-header-content > label {
+  font-size: smaller;
+}
+
+.search-container > div {
+  height: 30px;
+}

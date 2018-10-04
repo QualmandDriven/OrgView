@@ -21,9 +21,6 @@ import userIcon from '../user.svg';
 // employeeId: 5
 
 class PersonRow extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     rowClickHandler = () => {
         this.props.selectPersonHandler(this.props.person);

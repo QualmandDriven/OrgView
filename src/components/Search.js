@@ -1,35 +1,36 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import Select from 'react-select';
 import AsyncSelect from "react-select/lib/Async";
-import userIcon from '../user.svg';
 
-import { members, SearchTypes } from '../structure/Content';
-
-
+import { SearchFunction } from "../apiCalls";
+import { SearchTypes } from '../structure/Content';
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchType: SearchTypes[0]
+            searchType: SearchTypes[0].value
         };
     }
 
     handleInputChange = (e) => {
-        console.log(e);
+        if(e.value.type === 'user') {
+            this.props.history.push('/users/' + e.value.id);
+        }
+        else if(e.value.type === 'department') {
+            this.props.history.push('/departments/' + e.value.id);
+        }   
     }
 
-    filter = (v) => {
-        let mem = members.map(m => {
-            return {value: m.name, label: <div><img style={{height: "16px", width: "16px"}} src={userIcon} /> {m.name}</div>}
-        });
-        return mem.filter(f => f.value.toLowerCase().includes(v.toLowerCase()));
+    search = (v) => {
+        return SearchFunction(this.state.searchType, v);
     }
 
     handleSearch = (e, callback) => {
         setTimeout(() => {
-            callback(this.filter(e));
+            callback(this.search(e));
         }, 500);
     }
 
@@ -38,12 +39,6 @@ class Search extends React.Component {
     }
 
     render() {
-        const customStyles = {
-            control: () => ({
-                width: 200
-            }
-            )
-        };
         return (
             <div className="grid-container search-container" style={{gridTemplateColumns: "250px 300px"}}>
                 <Select
@@ -68,4 +63,4 @@ class Search extends React.Component {
     }
 }
 
-export default Search;
+export default withRouter(Search);

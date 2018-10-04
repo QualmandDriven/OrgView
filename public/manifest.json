@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "OrgView",
+  "name": "View your organisation and use it as a phonebook.",
   "icons": [
     {
       "src": "favicon.ico",

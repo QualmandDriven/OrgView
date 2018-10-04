@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
+import { Switch, Route } from 'react-router-dom';
+
 import Department from "../components/Department";
+import DepartmentView from "./DepartmentView";
 import Specifics from '../components/Specifics';
 
 class Content extends Component {
@@ -48,12 +51,22 @@ class Content extends Component {
       subDepartments = dept1SPC.subDepartments;
     }
 
-    
+    let spec = {
+      showMember: this.state.showMembers,
+      showDetail: this.state.showDetails,
+      hierarchy: this.state.hierarchy
+    };
 
+    // <Department department={dept1SPC} subDepartments={subDepartments} showMember={this.state.showMembers} showDetail={this.state.showDetails} />
     return (
         <div className="grid-container" style={{gridTemplateColumns: "200px auto"}}>
           <Specifics showMembers={this.state.showMembers} showDetails={this.state.showDetails} showMembersHandler={this.showHideMembers} showDetailsHandler={this.showHideDetails} hierarchyHandler={this.hierarchyHandler} />
-          <Department department={dept1SPC} subDepartments={subDepartments} showMember={this.state.showMembers} showDetail={this.state.showDetails} />
+          <Switch>
+            <Route exact path='/' component={() => <Department department={dept1SPC} subDepartments={subDepartments} specifics={spec} />} />
+            <Route path='/departments/:id' component={(props) => <DepartmentView route={props} specifics={spec} />} />
+            <Route path='/users/:id' component={(props) => <span>User: {props.match.params.id}</span>} />
+            <Route component={() => <h1>404 - Not found</h1>} />
+          </Switch>
         </div>
     );
   }
@@ -62,6 +75,7 @@ class Content extends Component {
 export default Content;
 
 export const leader = {
+  type: "user",
   name: "Hans Dampf",
   jobDescription: "Lead",
   phoneNumber: "+49 89 1234 12345",
@@ -78,6 +92,8 @@ export const leader = {
 
 export const members = [
   {
+    id: 1,
+    type: "user",
     name: "Kurzer Name",
     jobDescription: "Nudel 1",
     phoneNumber: "+49 89 1234 12346",
@@ -92,6 +108,8 @@ export const members = [
     employeeId: 2,
   },
   {
+    id: 2,
+    type: "user",
     name: "Mittel langer Name",
     jobDescription: "Nudel 2",
     phoneNumber: "+49 89 1234 12347",
@@ -106,6 +124,8 @@ export const members = [
     employeeId: 3
   },
   {
+    id: 3,
+    type: "user",
     name: "Langer Naaaammmeeeeee",
     jobDescription: "Nudel 3",
     phoneNumber: "+49 89 1234 12348",
@@ -120,6 +140,8 @@ export const members = [
     employeeId: 4
   },
   {
+    id: 4,
+    type: "user",
     name: "123456789 123456789",
     jobDescription: "123456 456123456 123564987",
     phoneNumber: "+49 89 1234 12349",
@@ -136,6 +158,7 @@ export const members = [
 ];
 
 export const dept1SC = {
+  type: "department",
   id: 1,
   name: "C",
   description: "Conf",
@@ -145,6 +168,7 @@ export const dept1SC = {
   subDepartments: []
 };
 export const  dept1SV = {
+  type: "department",
   id: 2,
   name: "S",
   description: "Sales",
@@ -154,6 +178,7 @@ export const  dept1SV = {
   subDepartments: [dept1SC, dept1SC]
 };
 export const dept1SPC = {
+  type: "department",
   id: 3,
   name: "PC",
   description: "Projects & Controlling",
@@ -164,7 +189,7 @@ export const dept1SPC = {
 };
 
 export const SearchTypes = [
-  { value: "Persons + Departments", label: "Persons + Departments" },
-  { value: "Persons", label: "Persons" },
-  { value: "Departments", label: "Departments" },
+  { value: ["users", "groups"], label: "Persons + Departments" },
+  { value: ["users"], label: "Persons" },
+  { value: ["groups"], label: "Departments" },
 ];

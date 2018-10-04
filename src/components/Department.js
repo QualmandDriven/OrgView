@@ -7,8 +7,8 @@ class Department extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showMembers: props.showMember,
-            showDetails: props.showDetail,
+            showMembers: props.specifics.showMember,
+            showDetails: props.specifics.showDetail,
             selectedPerson: undefined,
         };
     }
@@ -36,7 +36,6 @@ class Department extends React.Component {
     }
 
     render() {
-        
         let leader = "";
         if(this.props.department.leader !== undefined) {
             leader = <PersonDetail person={this.props.department.leader} small={!this.state.showDetails} />;
@@ -82,7 +81,13 @@ class Department extends React.Component {
         let subDepartments = "";
         let columnsWidth = "";
         if(this.props.subDepartments) {
-            subDepartments = this.props.subDepartments.map(d => <Department key={d.id} department={d} showMembers={this.state.showMembers} showDetails={this.state.showDetails} />)
+            let spec = {
+                showMember: this.state.showMembers,
+                showDetail: this.state.showDetails,
+                hierarchy: this.state.hierarchy
+              };
+
+            subDepartments = this.props.subDepartments.map(d => <Department key={d.id} department={d} specifics={spec} />)
             columnsWidth = Array(this.props.subDepartments.length).fill("auto").join(" ");
         }
 

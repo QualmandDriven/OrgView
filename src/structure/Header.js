@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from '../logo.svg';
 
+import { Link } from 'react-router-dom';
+
 import Search from '../components/Search';
 
 class Header extends React.Component {
@@ -10,10 +12,10 @@ class Header extends React.Component {
             <header className="App-header">
                 <div className="grid-container" style={{gridTemplateColumns: "75px 350px auto"}}>
                     <div>
-                        <a href="/"><img src={logo} className="App-logo" alt="logo" /></a>
+                        <Link to="/"><img src={logo} className="App-logo" alt="logo" /></Link>
                     </div>
                     <div>
-                        <a href="/"><h1 className="App-title">OrgView</h1></a>
+                        <Link to="/"><h1 className="App-title">OrgView</h1></Link>
                     </div>
                     <Search />
                 </div>

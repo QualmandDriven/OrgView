@@ -2,7 +2,7 @@ import React from 'react';
 
 function IconLink(props) {
     return (
-        <a href={props.link}><img className="icon" src={props.icon} alt={props.description} /> {props.name}</a>
+        <a target={props.newTab === true ? "_blank" : ""} href={props.link}><img className="icon" src={props.icon} alt={props.description} /> {props.name}</a>
     );
 }
 

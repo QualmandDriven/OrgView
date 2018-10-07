@@ -3,6 +3,7 @@ import React from 'react';
 import { members, dept1SC, dept1SPC, dept1SV } from './structure/Content';
 import userIcon from './user.svg';
 import groupIcon from './group.svg';
+import logo from './logo.svg';
 
 export function SearchFunction(searchType, searchValue) {
     let mem = [];
@@ -37,6 +38,56 @@ export async function getDepartment(id) {
     });
 }
 
+export async function getPersonDepartment(id) {
+    let depts = [dept1SC, dept1SPC, dept1SV];
+    return new Promise((resolve, reject) => {
+        try {
+            depts.forEach(d => {
+                if(d.members.map(m => m.id).includes(+id)) {
+                    resolve(d);
+                }
+            });
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+export async function getPerson(id) {
+    return new Promise((resolve, reject) => {
+        try {
+            resolve(members.find(m => m.id === +id));
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 export async function getUser(id) {
-    return members.find(m => m.id === id);
+    return members.find(m => m.id === +id);
+}
+
+export function getPhoneLinkLocation(phoneNumber) {
+    return "/someScript/" + phoneNumber;
+}
+
+export function getBuildingLinkLocation(building) {
+    return "/buildings/" + building;
+}
+
+export function isMobile() {
+    // return true;
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+        return true;
+    }
+
+    return false;
+}
+
+export function getDefaultDepartmentId() {
+    return 1;
+}
+
+export function getAppIcon() {
+    return logo;
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 
 import Department from "../components/Department";
+import Loading from "./Loading";
 
-import { getDepartment } from '../apiCalls';
+import { getDepartment, getDefaultDepartmentId } from '../apiCalls';
 
 class DepartmentView extends React.Component {
     constructor(props) {
@@ -14,8 +15,11 @@ class DepartmentView extends React.Component {
             department: undefined
         }
 
-        if(props.route.match.params.id !== undefined) {
-            this.loadDepartment(props.route.match.params.id);
+        if(props.route === undefined || props.route.match === undefined || props.route.match.params === undefined || props.route.match.params.id === undefined) {
+            this.loadDepartment(getDefaultDepartmentId());
+        }
+        else {
+            setTimeout(() => this.loadDepartment(props.route.match.params.id), 1000);
         }
     }
 
@@ -27,7 +31,7 @@ class DepartmentView extends React.Component {
 
     render() {
         if(this.state.loading === true) {
-            return <span>Loading...</span>;
+            return <Loading />;
         }
 
         if(this.state.error === true) {
@@ -36,7 +40,7 @@ class DepartmentView extends React.Component {
 
         if(this.state.department !== undefined) {
             let subDepartments = [];
-            if(this.props.specifics.hierarchy.slice(0, 1) !== '1') {
+            if(this.props.specifics.hierarchy !== 1) {
                 subDepartments = this.state.department.subDepartments;
             }
 
@@ -45,7 +49,7 @@ class DepartmentView extends React.Component {
             );
         }
 
-        return "Loading...";
+        return <Loading />;
     }
 }
 

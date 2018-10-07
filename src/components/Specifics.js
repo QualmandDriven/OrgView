@@ -11,9 +11,9 @@ class Specifics extends React.Component {
         };
 
         this.hierarchies = [
-            { value: "1 Hierarchie", label: "1 Hierarchie" },
-            { value: "2 Hierarchies", label: "2 Hierarchies" },
-            { value: "3 Hierarchies", label: "3 Hierarchies" },
+            { value: 1, label: "1 Hierarchy" },
+            { value: 2, label: "2 Hierarchies" },
+            { value: 3, label: "3 Hierarchies" },
           ];
     }
 

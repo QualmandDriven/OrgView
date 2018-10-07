@@ -2,6 +2,7 @@ import React from "react";
 
 import PersonRow from './PersonRow';
 import PersonDetail from './PersonDetail';
+import DepartmentCrumbs from './DepartmentCrumbs';
 
 class Department extends React.Component {
     constructor(props) {
@@ -93,11 +94,14 @@ class Department extends React.Component {
 
         let cssClass = this.state.showDetails === true ? " large " : " small ";
 
+        let parentDepartments = this.props.department.parentDepartments.slice();
+        parentDepartments.push(this.props.department);
+
         return (
             <div>
                 <div className={"department-container" + cssClass}>
                     <div>
-                        <a href="Main">Main</a> > <a href="Sub">Sub</a> > <a href="SubSub">SubSub</a> > {this.props.department.name}
+                        <DepartmentCrumbs departments={parentDepartments} />
                     </div>
                     <div className="department-content">
                         <div className="department-header">

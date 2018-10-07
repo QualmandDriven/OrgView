@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 
 import { Switch, Route } from 'react-router-dom';
 
-import Department from "../components/Department";
+// import Department from "../components/Department";
 import DepartmentView from "./DepartmentView";
+import PersonView from "./PersonView";
 import Specifics from '../components/Specifics';
+import ErrorNotFound from './ErrorNotFound';
 
 class Content extends Component {
   constructor(props) {
@@ -12,7 +14,7 @@ class Content extends Component {
     this.state = {
       showMembers: true,
       showDetails: true,
-      hierarchy: "1 Hierarchie",
+      hierarchy: 1,
     };
   }
 
@@ -20,7 +22,7 @@ class Content extends Component {
     this.setState({
       hierarchy: hierarchy
     });
-    if (hierarchy.substring(0, 1) === "1") {
+    if (hierarchy === 1) {
       this.setState({
         showDetails: true,
         showMembers: true
@@ -46,26 +48,20 @@ class Content extends Component {
   }
 
   render() {
-    let subDepartments = [];
-    if(this.state.hierarchy.slice(0, 1) !== '1') {
-      subDepartments = dept1SPC.subDepartments;
-    }
-
     let spec = {
       showMember: this.state.showMembers,
       showDetail: this.state.showDetails,
       hierarchy: this.state.hierarchy
     };
 
-    // <Department department={dept1SPC} subDepartments={subDepartments} showMember={this.state.showMembers} showDetail={this.state.showDetails} />
     return (
         <div className="grid-container" style={{gridTemplateColumns: "200px auto"}}>
           <Specifics showMembers={this.state.showMembers} showDetails={this.state.showDetails} showMembersHandler={this.showHideMembers} showDetailsHandler={this.showHideDetails} hierarchyHandler={this.hierarchyHandler} />
           <Switch>
-            <Route exact path='/' component={() => <Department department={dept1SPC} subDepartments={subDepartments} specifics={spec} />} />
+            <Route exact path='/' component={(props) => <DepartmentView route={props} specifics={spec} />} />
             <Route path='/departments/:id' component={(props) => <DepartmentView route={props} specifics={spec} />} />
-            <Route path='/users/:id' component={(props) => <span>User: {props.match.params.id}</span>} />
-            <Route component={() => <h1>404 - Not found</h1>} />
+            <Route path='/users/:id' component={(props) => <PersonView route={props} />} />
+            <Route component={() => <ErrorNotFound />} />
           </Switch>
         </div>
     );
@@ -165,7 +161,8 @@ export const dept1SC = {
   costCentre: "12314",
   leader: leader,
   members: members,
-  subDepartments: []
+  subDepartments: [],
+  parentDepartments: [],
 };
 export const  dept1SV = {
   type: "department",
@@ -175,7 +172,8 @@ export const  dept1SV = {
   costCentre: "12313",
   leader: leader,
   members: members,
-  subDepartments: [dept1SC, dept1SC]
+  subDepartments: [dept1SC, dept1SC],
+  parentDepartments: [dept1SC],
 };
 export const dept1SPC = {
   type: "department",
@@ -185,7 +183,8 @@ export const dept1SPC = {
   costCentre: "12312",
   leader: leader,
   members: members,
-  subDepartments: [dept1SV, dept1SC]
+  subDepartments: [dept1SV, dept1SC],
+  parentDepartments: [dept1SV, dept1SC],
 };
 
 export const SearchTypes = [

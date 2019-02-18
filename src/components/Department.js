@@ -4,6 +4,15 @@ import PersonRow from './PersonRow';
 import PersonDetail from './PersonDetail';
 import DepartmentCrumbs from './DepartmentCrumbs';
 
+import CheckBox from '../controls/CheckBox';
+
+import Typography from "@material-ui/core/Typography";
+import Collapse from "@material-ui/core/Collapse";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
+
 class Department extends React.Component {
     constructor(props) {
         super(props);
@@ -97,31 +106,44 @@ class Department extends React.Component {
         let parentDepartments = this.props.department.parentDepartments.slice();
         parentDepartments.push(this.props.department);
 
+        let expandIcon = this.state.showMembers ? <ExpandLessIcon /> : <ExpandMoreIcon />
+
         return (
             <div>
                 <div className={"department-container" + cssClass}>
-                    <div>
-                        <DepartmentCrumbs departments={parentDepartments} />
-                    </div>
-                    <div className="department-content">
-                        <div className="department-header">
-                            <div className="department-header-title">
-                                <span>
-                                    {this.props.department.name} - {this.props.department.description}
-                                </span>
+                    <Paper>
+                        <div className={"department-container-header"}>
+                            <div className={"grid-container"} style={{ gridTemplateColumns: "auto 50px" }}>
+                                <div>
+                                    <Typography component="p">
+                                        <DepartmentCrumbs departments={parentDepartments} />
+                                    </Typography>
+                                    <Typography variant="h5" component="h3">
+                                        {this.props.department.name + " - " + this.props.department.description}
+                                    </Typography>
+                                    <Typography component="p">
+                                        {"Kostenstelle: " + this.props.department.costCentre}
+                                    </Typography>
+                                </div>
+                                <div>
+                                    <IconButton
+                                        onClick={this.showHideMembers}
+                                        aria-expanded={this.state.showMembers}
+                                        aria-label="Show Members">
+                                        {expandIcon}
+                                    </IconButton>
+                                </div>
                             </div>
-                            <div className="department-header-content">
-                                <label>Kostenstelle: {this.props.department.costCentre}</label>
-                                <input id={"showDetails" + this.props.department.id} type="checkbox" name={"showDetails" + this.props.department.id} onChange={this.showHideDetails} checked={this.state.showDetails} /> <label htmlFor={"showDetails" + this.props.department.id}>Show Details</label>
-                                <input id={"showMembers" + this.props.department.id} type="checkbox" name={"showMembers" + this.props.department.id} onChange={this.showHideMembers} checked={this.state.showMembers} /> <label htmlFor={"showMembers" + this.props.department.id}>Show Members</label>
-                            </div>
+                            <hr />
                         </div>
                         {leader}
-                        {this.state.showMembers ? <hr /> : ""}
-                        <div className="members-container">
-                            {members}
-                        </div>
-                    </div>
+                        <Collapse in={this.state.showMembers} timeout="auto" unmountOnExit>
+                            <div className="members-container">
+                                {members}
+                            </div>
+                        </Collapse>
+                    </Paper>
+                    
                 </div>
                 <div className="grid-container" style={{gridTemplateColumns: columnsWidth}}>
                     {subDepartments}
@@ -130,5 +152,64 @@ class Department extends React.Component {
         );
     }
 }
+
+// <Card>
+//                         <CardContent>
+//                             <DepartmentCrumbs departments={parentDepartments} />
+//                         </CardContent>
+//                         <CardHeader 
+//                             title={this.props.department.name + " - " + this.props.department.description} 
+//                             subheader={"Kostenstelle: " + this.props.department.costCentre}
+//                             action={
+//                                 <IconButton
+//                                     onClick={this.showHideMembers}
+//                                     aria-expanded={this.state.showMembers}
+//                                     aria-label="Show Members">
+//                                     {expandIcon}
+//                                 </IconButton>
+//                             } />
+//                         <CardContent>
+                            
+                            
+//                             <hr />
+//                             {leader}
+//                             <Collapse in={this.state.showMembers} timeout="auto" unmountOnExit>
+//                                 <CardContent>
+//                                     <div className="members-container">
+//                                         {members}
+//                                     </div>
+//                                 </CardContent>
+//                             </Collapse>
+                            
+//                         </CardContent>
+
+
+//                     </Card>
+
+// <div>
+// <DepartmentCrumbs departments={parentDepartments} />
+// </div>
+
+// <div className="department-content">
+// <div className="department-header">
+//     <div className="department-header-title">
+//         <span>
+//             {this.props.department.name} - {this.props.department.description}
+//         </span>
+//     </div>
+//     <div className="department-header-content">
+//         <label>Kostenstelle: {this.props.department.costCentre}</label>
+//         <FormGroup row>
+//             <CheckBox checked={this.state.showDetails} onChange={this.showHideDetails} label="Show Details" />
+//             <CheckBox checked={this.state.showMembers} onChange={this.showHideMembers} label="Show Members" />
+//         </FormGroup>
+//     </div>
+// </div>
+// {leader}
+// {this.state.showMembers ? <hr /> : ""}
+// <div className="members-container">
+//     {members}
+// </div>
+// </div>
 
 export default Department;

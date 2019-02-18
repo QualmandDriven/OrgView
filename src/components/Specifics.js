@@ -1,6 +1,12 @@
 import React from 'react';
 
-import Select from 'react-select';
+// import Select from 'react-select';
+import Select from '../controls/Select';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+
+import CheckBox from '../controls/CheckBox';
 
 class Specifics extends React.Component {
     constructor(props) {
@@ -22,35 +28,32 @@ class Specifics extends React.Component {
         this.props.showDetailsHandler();
     }
 
-    hierarchyChangedHandler = (e) => {
-        this.props.hierarchyHandler(e.value);
-    }
-
     render() {
         return (
             <div style={{padding: "10px"}}>
-                <div>
-                    <h4>Level</h4>
-                    <Select
-                        className="basic-single"
-                        classNamePrefix="select"
-                        defaultValue={this.hierarchies[0]}
-                        options={this.hierarchies}
-                        isLoading={false}
-                        isClearable={false}
-                        isRtl={false}
-                        isSearchable={false}
-                        onChange={this.hierarchyChangedHandler}
-                    />
-                </div>
-                <div>
-                    <h4>Display</h4>
-                    <div><input id="showDetailsSpecifics" type="checkbox" name="showDetails" onChange={this.detailsChangedHandler} checked={this.props.showDetails} /> <label htmlFor="showDetailsSpecifics">Show Details</label></div>
-                    <div><input id="showMembersSpecifics" type="checkbox" name="showMembers" onChange={this.props.showMembersHandler} checked={this.props.showMembers} /> <label htmlFor="showMembersSpecifics">Show Members</label></div>
-                </div>
+                <Card>
+                    <CardHeader title="Filtern nach" />
+                    <CardContent>
+                        <Select placeholder="Level" value={this.props.hierarchy} onChange={this.props.hierarchyHandler} options={this.hierarchies} />
+                        <CheckBox checked={this.props.showDetails} onChange={this.detailsChangedHandler} label="Show Details" />
+                        <CheckBox checked={this.props.showMembers} onChange={this.props.showMembersHandler} label="Show Members" />
+                    </CardContent>
+                </Card>
             </div>
         );
     }
 }
+
+// <Select
+// className="basic-single"
+// classNamePrefix="select"
+// defaultValue={this.hierarchies[0]}
+// options={this.hierarchies}
+// isLoading={false}
+// isClearable={false}
+// isRtl={false}
+// isSearchable={false}
+// onChange={this.hierarchyChangedHandler}
+// />
 
 export default Specifics;

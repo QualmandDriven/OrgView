@@ -20,7 +20,7 @@ class PersonView extends React.Component {
         if(props.route === undefined || props.route.match === undefined || props.route.match.params === undefined || props.route.match.params.id === undefined) {
             this.setState({error: true});
         }
-        else {
+        else { 
             setTimeout(() => this.loadUser(props.route.match.params.id), 1000);
         }
     }

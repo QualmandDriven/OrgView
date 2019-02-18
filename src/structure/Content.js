@@ -19,10 +19,11 @@ class Content extends Component {
   }
 
   hierarchyHandler = (hierarchy) => {
+    let hy = +hierarchy;
     this.setState({
-      hierarchy: hierarchy
+      hierarchy: hy
     });
-    if (hierarchy === 1) {
+    if (hy === 1) {
       this.setState({
         showDetails: true,
         showMembers: true
@@ -53,10 +54,10 @@ class Content extends Component {
       showDetail: this.state.showDetails,
       hierarchy: this.state.hierarchy
     };
-
+    
     return (
         <div className="grid-container" style={{gridTemplateColumns: "200px auto"}}>
-          <Specifics showMembers={this.state.showMembers} showDetails={this.state.showDetails} showMembersHandler={this.showHideMembers} showDetailsHandler={this.showHideDetails} hierarchyHandler={this.hierarchyHandler} />
+          <Specifics showMembers={this.state.showMembers} showDetails={this.state.showDetails} showMembersHandler={this.showHideMembers} showDetailsHandler={this.showHideDetails} hierarchy={this.state.hierarchy} hierarchyHandler={this.hierarchyHandler} />
           <Switch>
             <Route exact path='/' component={(props) => <DepartmentView route={props} specifics={spec} />} />
             <Route path='/departments/:id' component={(props) => <DepartmentView route={props} specifics={spec} />} />

@@ -44,7 +44,11 @@ body {
 }
 
 tr:nth-child(even) {
-  background-color: lightgrey;
+  background-color: rgb(230, 230, 230);
+}
+
+.specifics-container {
+  padding: 5px;
 }
 
 .person-container {
@@ -56,12 +60,16 @@ tr:nth-child(even) {
 }
 
 .members-container > div:nth-child(odd) {
-  background-color: lightgrey;
+  background-color: rgb(240, 240, 240);
 }
 
 .department-container {
   margin: auto;
   margin-top: 10px; 
+}
+
+.department-container-header {
+  padding: 5px;
 }
 
 @media screen and (min-width: 420px) {
@@ -94,5 +102,5 @@ tr:nth-child(even) {
 }
 
 .search-container > div {
-  height: 30px;
+  /* height: 30px; */
 }
